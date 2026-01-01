@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import './theme.css';
+
 :root {
   color-scheme: dark;
-  font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, 'Liberation Mono', 'Courier New', monospace;
-  background-color: #070b09;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -14,8 +15,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: #070b09;
-  color: #e6f8ea;
+  background: var(--bg);
+  color: var(--text);
   font-size: 16px;
   line-height: 1.6;
 }
@@ -24,67 +25,12 @@ body {
   min-height: 100vh;
 }
 
-.heading-font {
-  font-family: 'Chakra Petch', system-ui, sans-serif;
+.font-display {
+  font-family: 'Orbitron', system-ui, sans-serif;
 }
 
-.app-shell {
-  position: relative;
-  overflow: hidden;
-}
-
-.app-shell::before {
-  content: '';
-  position: absolute;
-  inset: -20% -10%;
-  background-image: linear-gradient(
-      rgba(110, 231, 255, 0.04) 1px,
-      transparent 1px
-    ),
-    linear-gradient(90deg, rgba(110, 231, 255, 0.04) 1px, transparent 1px);
-  background-size: 52px 52px;
-  opacity: 0.35;
-  transform: rotate(-1deg);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.app-shell::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    rgba(110, 231, 255, 0.02) 0px,
-    rgba(110, 231, 255, 0.02) 1px,
-    transparent 2px,
-    transparent 6px
-  );
-  mix-blend-mode: screen;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.panel {
-  position: relative;
-  background: rgba(12, 18, 16, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
-}
-
-.panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(110, 231, 255, 0.16);
-  opacity: 0;
-  transition: opacity 200ms ease;
-  pointer-events: none;
-}
-
-.panel:hover::before {
-  opacity: 1;
+.font-body {
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 .scanline-fade {

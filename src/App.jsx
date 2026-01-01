@@ -48,21 +48,17 @@ I love cybersecurity, web development, music, and video games. Currently learnin
     projects: [
       {
         name: 'NPM Team at Banorte Bank',
+        featured: true,
         description:
           'Built a pipeline to classify and index relevant news, identifying patterns in positive vs. negative reports and their effects on inflation.',
         stack: ['Regex', 'n8n', 'Automation'],
-        links: [
-          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
-        ],
       },
       {
         name: 'Sustainable Energy Dashboard at S2G Energy',
+        featured: false,
         description:
           'Implemented FastAPI endpoints and collaborated on the front end to track water, gas, and energy consumption in one dashboard.',
         stack: ['FastAPI', 'Python', 'Full Stack'],
-        links: [
-          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
-        ],
       },
     ],
     contactTitle: 'Signal',
@@ -113,21 +109,17 @@ Me encanta la ciberseguridad, el desarrollo web, la musica y los videojuegos. Es
     projects: [
       {
         name: 'NPM Team at Banorte Bank',
+        featured: true,
         description:
           'Cree un flujo para clasificar e indexar noticias relevantes, identificando patrones de reportes positivos y negativos y su impacto en inflacion.',
         stack: ['Regex', 'n8n', 'Automatizacion'],
-        links: [
-          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
-        ],
       },
       {
         name: 'Sustainable Energy Dashboard at S2G Energy',
+        featured: false,
         description:
           'Implemente endpoints con FastAPI y colabore en el front-end para monitorear consumo de agua, gas y energia.',
         stack: ['FastAPI', 'Python', 'Full Stack'],
-        links: [
-          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
-        ],
       },
     ],
     contactTitle: 'Canal',
@@ -164,7 +156,7 @@ function App() {
           }
         })
       },
-      { rootMargin: '-40% 0px -45% 0px', threshold: 0.1 },
+      { rootMargin: '-45% 0px -40% 0px', threshold: 0.1 },
     )
 
     targets.forEach((target) => observer.observe(target))
@@ -172,44 +164,65 @@ function App() {
   }, [sections])
 
   return (
-    <div className="app-shell bg-ink text-white">
-      <div className="relative z-10 min-h-screen bg-radial-void">
-        <header className="mx-auto flex max-w-[1100px] flex-col gap-10 px-5 pb-12 pt-10 sm:px-8">
-          <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-accent/70">
-            <span className="scanline-fade">Secure channel established</span>
+    <div className="cyber-shell font-body text-[var(--text)]">
+      <div className="network-lines" aria-hidden="true" />
+      <div className="relative z-10">
+        <header className="mx-auto flex max-w-[1200px] flex-col gap-10 px-5 pb-12 pt-10 sm:px-8">
+          <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-[var(--muted)]">
+            <span className="animate-pulse-soft">Secure channel established</span>
             <button
               type="button"
-              className="rounded-full border border-accent/40 px-4 py-2 text-xs font-semibold text-accent transition hover:border-accent hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              className="rounded-full border border-[var(--stroke)] px-4 py-2 text-xs font-semibold text-[var(--accent)] transition hover:border-[var(--accent)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
               onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
             >
               {lang === 'en' ? 'ES' : 'EN'}
             </button>
           </div>
 
-          <div className="panel rounded-[32px] p-7 sm:p-10">
-            <div className="flex flex-col gap-6">
-              <p className="text-xs uppercase tracking-[0.35em] text-accent/70">
-                {t.heroTag}
-              </p>
-              <div className="flex flex-wrap items-end justify-between gap-6">
-                <div>
-                  <h1 className="heading-font text-5xl font-bold text-white sm:text-6xl md:text-7xl">
-                    Pankeki
-                  </h1>
-                  <p className="mt-2 text-sm text-white/60">
-                    Ximena Flores • 花姫
-                  </p>
-                </div>
-                <div className="text-right text-sm text-white/70">
-                  <p className="max-w-sm">{t.heroIntro}</p>
-                </div>
+          <div className="glass-panel rounded-2xl px-7 py-10 sm:px-12">
+            <div className="flex flex-col gap-8">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-[var(--muted)]">
+                  {t.heroTag}
+                </p>
+                <h1 className="font-display mt-4 text-5xl font-bold text-white sm:text-6xl md:text-7xl">
+                  Pankeki
+                </h1>
+                <p className="mt-2 text-sm text-[var(--muted)]">
+                  Ximena Flores • 花姫
+                </p>
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-xl text-base text-[var(--muted)] sm:text-[17px]">
+                  {t.heroIntro}
+                </div>
+                <span className="inline-flex items-center rounded-full bg-[var(--accent)]/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
+                  {t.heroTag}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="#projects"
+                  className="btn-primary rounded-full px-6 py-3 text-sm uppercase tracking-[0.2em] transition hover:translate-y-[-1px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                >
+                  View Projects
+                </a>
+                <button
+                  type="button"
+                  className="btn-secondary rounded-full px-6 py-3 text-sm uppercase tracking-[0.2em] transition hover:translate-y-[-1px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                  title="Resume coming soon"
+                >
+                  Download Resume
+                </button>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
                 {t.focus.map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-accent/30 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.2em] text-accent/90"
+                    className="rounded-full border border-[var(--stroke)] bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[var(--accent2)]"
                   >
                     {item}
                   </span>
@@ -219,16 +232,16 @@ function App() {
           </div>
         </header>
 
-        <nav className="sticky top-0 z-20 border-y border-white/5 bg-ink/80 backdrop-blur">
-          <div className="mx-auto flex max-w-[1100px] flex-wrap gap-4 px-5 py-4 text-sm uppercase tracking-[0.2em] text-white/60 sm:px-8">
+        <nav className="sticky top-0 z-20 border-y border-white/5 bg-[rgba(5,10,18,0.75)] backdrop-blur-xl">
+          <div className="mx-auto flex max-w-[1200px] flex-wrap gap-6 px-5 py-4 text-sm uppercase tracking-[0.2em] text-[var(--muted)] sm:px-8">
             {sections.map((item) => {
               const isActive = activeId === item.id
               return (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className={`transition hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${
-                    isActive ? 'border-b-2 border-accent pb-1 text-accent' : ''
+                  className={`nav-link transition hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] ${
+                    isActive ? 'is-active text-[var(--accent)]' : ''
                   }`}
                 >
                   {item.label}
@@ -238,12 +251,12 @@ function App() {
           </div>
         </nav>
 
-        <main className="mx-auto flex max-w-[1100px] flex-col gap-10 px-5 pb-16 pt-10 sm:px-8">
-          <section id="about" className="panel rounded-[28px] p-7 sm:p-10">
-            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+        <main className="mx-auto flex max-w-[1200px] flex-col gap-10 px-5 pb-20 pt-12 sm:px-8">
+          <section id="about" className="glass-panel px-7 py-10 sm:px-12">
+            <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[0].label}
             </h2>
-            <div className="mt-6 text-base leading-relaxed text-white/75 sm:text-[17px]">
+            <div className="mt-6 text-base leading-relaxed text-[var(--muted)] sm:text-[17px]">
               {t.bio.split('\n').map((line) => (
                 <p key={line} className="mb-4 last:mb-0">
                   {line}
@@ -252,34 +265,34 @@ function App() {
             </div>
           </section>
 
-          <section
-            id="experience"
-            className="panel rounded-[28px] p-7 sm:p-10"
-          >
-            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+          <section id="experience" className="glass-panel px-7 py-10 sm:px-12">
+            <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[1].label}
             </h2>
-            <div className="mt-6 space-y-6">
+            <div className="mt-6 grid gap-6 lg:grid-cols-2">
               {t.experience.map((role) => (
                 <div
                   key={`${role.role}-${role.company}`}
-                  className="rounded-2xl bg-white/5 p-5"
+                  className="rounded-2xl bg-white/5 p-5 transition hover:translate-y-[-4px]"
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-white/70">
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-[var(--muted)]">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="heading-font text-lg text-white">
+                      <span className="font-display text-lg text-white">
                         {role.role}
                       </span>
-                      <span className="text-white/40">•</span>
-                      <span className="text-white/70">{role.company}</span>
+                      <span className="text-[var(--muted)]">•</span>
+                      <span>{role.company}</span>
                     </div>
-                    <span className="text-xs uppercase tracking-[0.2em] text-white/50">
+                    <span className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
                       {role.dates}
                     </span>
                   </div>
-                  <ul className="mt-4 space-y-2 text-sm text-white/70">
+                  <ul className="mt-4 space-y-3 text-sm text-[var(--muted)]">
                     {role.bullets.map((bullet) => (
-                      <li key={bullet}>▸ {bullet}</li>
+                      <li key={bullet} className="flex items-start gap-3">
+                        <span className="dot mt-2" aria-hidden="true" />
+                        <span>{bullet}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -289,38 +302,41 @@ function App() {
 
           <section
             id="certifications"
-            className="panel rounded-[28px] p-7 sm:p-10"
+            className="glass-panel px-7 py-10 sm:px-12"
           >
-            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+            <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[2].label}
             </h2>
             <div className="mt-6 flex flex-wrap gap-3">
               {t.certs.map((cert) => (
                 <span
                   key={cert}
-                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/75"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--stroke)] bg-white/5 px-4 py-2 text-sm text-[var(--muted)]"
                 >
+                  <span className="dot" aria-hidden="true" />
                   {cert}
                 </span>
               ))}
             </div>
           </section>
 
-          <section id="projects" className="panel rounded-[28px] p-7 sm:p-10">
-            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+          <section id="projects" className="glass-panel px-7 py-10 sm:px-12">
+            <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[3].label}
             </h2>
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <div className="mt-6 grid gap-6 lg:grid-cols-2">
               {t.projects.map((project) => (
                 <article
                   key={project.name}
-                  className="flex h-full flex-col justify-between rounded-2xl bg-white/5 p-5"
+                  className={`flex h-full flex-col justify-between rounded-2xl bg-white/5 p-6 transition hover:translate-y-[-4px] ${
+                    project.featured ? 'ring-1 ring-[var(--accent)]/40' : ''
+                  }`}
                 >
                   <div>
-                    <h3 className="heading-font text-lg text-white">
+                    <h3 className="font-display text-lg text-white">
                       {project.name}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/70">
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
                       {project.description}
                     </p>
                   </div>
@@ -329,24 +345,15 @@ function App() {
                       {project.stack.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-accent/80"
+                          className="rounded-full border border-[var(--stroke)] bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-[var(--accent2)]"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <div className="flex gap-3 text-xs uppercase tracking-[0.2em] text-accent/80">
-                      {project.links.map((link) => (
-                        <a
-                          key={link.label}
-                          href={link.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="transition hover:text-white"
-                        >
-                          {link.label}
-                        </a>
-                      ))}
+                    <div className="flex gap-4 text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
+                      <span className="opacity-50">GitHub</span>
+                      <span className="opacity-50">Live</span>
                     </div>
                   </div>
                 </article>
@@ -354,18 +361,18 @@ function App() {
             </div>
           </section>
 
-          <section id="contact" className="panel rounded-[28px] p-7 sm:p-10">
+          <section id="contact" className="glass-panel px-7 py-10 sm:px-12">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="heading-font text-2xl text-white sm:text-3xl">
+                <h2 className="font-display text-2xl text-white sm:text-3xl">
                   {t.contactTitle}
                 </h2>
-                <p className="mt-3 text-sm text-white/70">{t.contactCta}</p>
+                <p className="mt-3 text-sm text-[var(--muted)]">{t.contactCta}</p>
               </div>
               <div className="flex flex-col gap-3 text-sm">
                 <a
                   href="mailto:ximenaflores02@hotmail.com"
-                  className="text-accent transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                  className="text-[var(--accent)] transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
                 >
                   ximenaflores02@hotmail.com
                 </a>
@@ -373,7 +380,7 @@ function App() {
                   href="https://www.linkedin.com/in/ximena-flores-4b094816a/"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-accent transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                  className="text-[var(--accent)] transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
                 >
                   LinkedIn
                 </a>
@@ -381,7 +388,7 @@ function App() {
                   href="https://github.com/pankeki-19"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-accent transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                  className="text-[var(--accent)] transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
                 >
                   GitHub
                 </a>
