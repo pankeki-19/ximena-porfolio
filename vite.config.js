@@ -9,7 +9,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const repoName = "ximena-porfolio";
+
 export default defineConfig({
   plugins: [react()],
-  base: "/ximena-porfolio/", // <-- your repo name EXACTLY
+  base: `/${repoName}/`, // <-- your repo name EXACTLY
 });
