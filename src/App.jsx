@@ -165,7 +165,6 @@ function App() {
 
   return (
     <div className="cyber-shell font-body text-[var(--text)]">
-      <div className="network-lines" aria-hidden="true" />
       <div className="relative z-10">
         <header className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-12 pt-10">
           <div className="flex items-center justify-between text-[12px] uppercase tracking-[0.32em] text-white/70">
@@ -179,13 +178,16 @@ function App() {
             </button>
           </div>
 
-          <div className="glass-panel px-8 py-10 sm:px-12">
+          <div className="glass-card relative px-8 py-12 sm:px-12">
+            <div className="absolute right-6 top-6">
+              <span className="badge-chip">01</span>
+            </div>
             <div className="flex flex-col gap-8">
               <div>
                 <p className="text-[12px] uppercase tracking-[0.32em] text-white/70">
                   {t.heroTag}
                 </p>
-                <h1 className="font-display mt-4 text-5xl font-bold text-white sm:text-6xl md:text-7xl lg:text-[72px]">
+                <h1 className="font-display text-glow mt-4 text-6xl font-bold text-white sm:text-6xl md:text-7xl lg:text-[72px]">
                   Ximena Flores
                 </h1>
                 <p className="mt-2 text-sm text-white/70">
@@ -197,7 +199,7 @@ function App() {
                 <div className="max-w-[55ch] text-[17px] text-white/70">
                   {t.heroIntro}
                 </div>
-                <span className="inline-flex items-center rounded-full bg-[var(--accent)]/10 px-5 py-2 text-[12px] font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
+                <span className="inline-flex items-center rounded-full border border-cyan-200/20 bg-cyan-400/10 px-6 py-2 text-[12px] font-semibold uppercase tracking-[0.25em] text-[var(--accent)] shadow-[0_0_24px_rgba(56,242,255,0.35)]">
                   {t.heroTag}
                 </span>
               </div>
@@ -205,7 +207,7 @@ function App() {
               <div className="flex flex-wrap gap-3">
                 <a
                   href="#projects"
-                  className="btn-primary rounded-full px-6 py-3 text-sm uppercase tracking-[0.2em] transition hover:translate-y-[-1px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                  className="btn-primary rounded-full px-6 py-3 text-sm uppercase tracking-[0.2em] transition hover:translate-y-[-1px] hover:shadow-[0_0_55px_rgba(56,242,255,0.65)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
                 >
                   View Projects
                 </a>
@@ -218,11 +220,13 @@ function App() {
                 </button>
               </div>
 
+              <div className="hero-line" />
+
               <div className="flex flex-wrap gap-2">
                 {t.focus.map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-cyan-200/15 bg-white/5 px-3 py-1 text-sm text-white/70"
+                    className="chip"
                   >
                     {item}
                   </span>
@@ -252,7 +256,7 @@ function App() {
         </nav>
 
         <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-20 pt-12">
-          <section id="about" className="glass-panel px-6 py-10 sm:px-8">
+          <section id="about" className="glass-card px-6 py-10 sm:px-8">
             <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[0].label}
             </h2>
@@ -265,8 +269,8 @@ function App() {
             </div>
           </section>
 
-          <section id="experience" className="glass-panel px-6 py-10 sm:px-8">
-            <h2 className="font-display text-2xl text-white sm:text-3xl">
+          <section id="experience" className="glass-card px-6 py-10 sm:px-8">
+            <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
               {sections[1].label}
             </h2>
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -300,8 +304,8 @@ function App() {
             </div>
           </section>
 
-          <section id="certifications" className="glass-panel px-6 py-10 sm:px-8">
-            <h2 className="font-display text-2xl text-white sm:text-3xl">
+          <section id="certifications" className="glass-card px-6 py-10 sm:px-8">
+            <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
               {sections[2].label}
             </h2>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -317,8 +321,8 @@ function App() {
             </div>
           </section>
 
-          <section id="projects" className="glass-panel px-6 py-10 sm:px-8">
-            <h2 className="font-display text-2xl text-white sm:text-3xl">
+          <section id="projects" className="glass-card px-6 py-10 sm:px-8">
+            <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
               {sections[3].label}
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
@@ -326,7 +330,9 @@ function App() {
                 <article
                   key={project.name}
                   className={`flex h-full flex-col justify-between rounded-2xl bg-white/5 p-6 transition hover:-translate-y-1 ${
-                    project.featured ? 'ring-1 ring-cyan-300/30' : ''
+                    project.featured
+                      ? 'md:col-span-2 shadow-[0_0_80px_rgba(56,242,255,0.18)] ring-1 ring-cyan-300/30'
+                      : ''
                   }`}
                 >
                   <div>
@@ -348,9 +354,9 @@ function App() {
                         </span>
                       ))}
                     </div>
-                    <div className="flex gap-4 text-xs text-[var(--accent)]">
-                      <span className="opacity-50">GitHub</span>
-                      <span className="opacity-50">Live</span>
+                    <div className="flex gap-3">
+                      <span className="btn-outline opacity-60">GitHub</span>
+                      <span className="btn-outline opacity-60">Live</span>
                     </div>
                   </div>
                 </article>
@@ -358,10 +364,10 @@ function App() {
             </div>
           </section>
 
-          <section id="contact" className="glass-panel px-6 py-10 sm:px-8">
+          <section id="contact" className="glass-card px-6 py-10 sm:px-8">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="font-display text-2xl text-white sm:text-3xl">
+                <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
                   {t.contactTitle}
                 </h2>
                 <p className="mt-3 text-sm text-white/70">{t.contactCta}</p>
