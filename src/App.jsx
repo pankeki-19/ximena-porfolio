@@ -1,407 +1,321 @@
-import { useEffect, useMemo, useState } from 'react'
+import { SiCisco, SiAmazon } from "react-icons/si";
+import { FaShieldAlt, FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
-const navItems = [
-  { key: 'about', en: 'About', es: 'Sobre mi' },
-  { key: 'experience', en: 'Experience', es: 'Experiencia' },
-  { key: 'certifications', en: 'Certifications', es: 'Certificaciones' },
-  { key: 'projects', en: 'Projects', es: 'Proyectos' },
-  { key: 'contact', en: 'Contact', es: 'Contacto' },
-]
+const chips = ["Web App Security", "Threat Visibility", "API Engineering", "Cloud"];
 
-const content = {
-  en: {
-    heroTag: 'Cybersecurity + Web Development',
-    heroIntro:
-      'Building secure, high-performance web experiences with a defender mindset.',
-    bio: `Canadian scholarship student in Mexico studying Computer Systems & IT Engineering.
-I love cybersecurity, web development, music, and video games. Currently learning Chinese, with basic proficiency in Japanese, French, and German.`,
-    focus: ['Web App Security', 'Threat Visibility', 'API Engineering', 'Cloud'],
-    experience: [
-      {
-        role: 'ICT Intern',
-        company: 'Huawei',
-        dates: 'Oct 2025 - Present',
-        bullets: [
-          'Gathered customer requirements and translated them into technical proposals, diagrams, and BOMs for enterprise/network projects.',
-          'Assisted demos and POCs with internal teams to validate feasibility, performance, and implementation steps.',
-          'Tracked opportunities and documentation (RFP/RFI responses, notes, follow-ups) to keep sales and engineering aligned.',
-        ],
-      },
-      {
-        role: 'Technology Risk Intern',
-        company: 'Qualitas Insurance Company',
-        dates: 'Apr 2025 - Oct 2025',
-        bullets: [
-          'Monitored security logs (SIEM) to detect anomalies, support investigations, and escalate incidents.',
-          'Performed authorized reconnaissance and exposure assessments; documented findings, risk, and remediation.',
-          'Produced executive-ready security reports and dashboards for leadership and board-level briefings.',
-        ],
-      },
+const experience = [
+  {
+    role: "ICT Intern",
+    company: "Huawei",
+    date: "Oct 2025 – Present",
+    bullets: [
+      "Gathered customer requirements and translated them into technical proposals, diagrams, and BOMs for enterprise/network projects.",
+      "Assisted demos and POCs with internal teams to validate feasibility, performance, and implementation steps.",
+      "Tracked opportunities and documentation (RFP/RFI responses, notes, follow-ups) to keep sales and engineering aligned.",
     ],
-    certs: [
-      'CC (Certified in Cybersecurity) - ISC2 - 2025',
-      'Security+ - CompTIA - 2025',
-      'AWS Academy Cloud Developing - AWS - 2025',
-      'Network Security - CISCO - 2024',
-      'CCNA: Switching, Routing, and Wireless Essentials - CISCO - 2023',
-    ],
-    projects: [
-      {
-        name: 'NPM Team at Banorte Bank',
-        featured: true,
-        description:
-          'Built a pipeline to classify and index relevant news, identifying patterns in positive vs. negative reports and their effects on inflation.',
-        stack: ['Regex', 'n8n', 'Automation'],
-      },
-      {
-        name: 'Sustainable Energy Dashboard at S2G Energy',
-        featured: false,
-        description:
-          'Implemented FastAPI endpoints and collaborated on the front end to track water, gas, and energy consumption in one dashboard.',
-        stack: ['FastAPI', 'Python', 'Full Stack'],
-      },
-    ],
-    contactTitle: 'Signal',
-    contactCta:
-      'Open to security, web development, and research collaboration.',
   },
-  es: {
-    heroTag: 'Ciberseguridad + Desarrollo Web',
-    heroIntro:
-      'Construyo experiencias web seguras y de alto rendimiento con mentalidad defensiva.',
-    bio: `Canadiense becada en Mexico, estudiante de Ingenieria en Sistemas Computacionales y TI.
-Me encanta la ciberseguridad, el desarrollo web, la musica y los videojuegos. Estudio chino y tengo nivel basico de japones, frances y aleman.`,
-    focus: [
-      'Seguridad Web',
-      'Visibilidad de Amenazas',
-      'Ingenieria de APIs',
-      'Cloud',
+  {
+    role: "Technology Risk Intern",
+    company: "Quálitas Insurance Company",
+    date: "Apr 2025 – Oct 2025",
+    bullets: [
+      "Monitored security logs (SIEM) to detect anomalies, support investigations, and escalate incidents.",
+      "Conducted authorized reconnaissance and exposure assessments; documented findings, risk, and remediation.",
+      "Produced executive-ready security reports and dashboards for leadership and board-level briefings.",
     ],
-    experience: [
-      {
-        role: 'Becaria de ICT',
-        company: 'Huawei',
-        dates: 'Oct 2025 - Presente',
-        bullets: [
-          'Recolecte requisitos de clientes y los traduje a propuestas tecnicas, diagramas y BOMs para proyectos enterprise/red.',
-          'Apoye demos y POCs con equipos internos para validar factibilidad, rendimiento y pasos de implementacion.',
-          'Di seguimiento a oportunidades y documentacion (RFP/RFI, notas, seguimientos) para alinear ventas e ingenieria.',
-        ],
-      },
-      {
-        role: 'Becaria de Riesgo Tecnologico',
-        company: 'Qualitas Insurance Company',
-        dates: 'Abr 2025 - Oct 2025',
-        bullets: [
-          'Monitoree logs de seguridad (SIEM) para detectar anomalias y escalar incidentes.',
-          'Realice reconocimiento autorizado y evaluaciones de exposicion; documente hallazgos, riesgo y remediacion.',
-          'Elabore reportes y dashboards ejecutivos para liderazgo y comite directivo.',
-        ],
-      },
-    ],
-    certs: [
-      'CC (Certified in Cybersecurity) - ISC2 - 2025',
-      'Security+ - CompTIA - 2025',
-      'AWS Academy Cloud Developing - AWS - 2025',
-      'Network Security - CISCO - 2024',
-      'CCNA: Switching, Routing, and Wireless Essentials - CISCO - 2023',
-    ],
-    projects: [
-      {
-        name: 'NPM Team at Banorte Bank',
-        featured: true,
-        description:
-          'Cree un flujo para clasificar e indexar noticias relevantes, identificando patrones de reportes positivos y negativos y su impacto en inflacion.',
-        stack: ['Regex', 'n8n', 'Automatizacion'],
-      },
-      {
-        name: 'Sustainable Energy Dashboard at S2G Energy',
-        featured: false,
-        description:
-          'Implemente endpoints con FastAPI y colabore en el front-end para monitorear consumo de agua, gas y energia.',
-        stack: ['FastAPI', 'Python', 'Full Stack'],
-      },
-    ],
-    contactTitle: 'Canal',
-    contactCta:
-      'Abierta a colaboraciones en seguridad, desarrollo web e investigacion.',
   },
-}
+];
 
-function App() {
-  const [lang, setLang] = useState('en')
-  const [activeId, setActiveId] = useState('about')
-  const t = content[lang]
+const certs = [
+  {
+    name: "CC (Certified in Cybersecurity)",
+    org: "ISC2",
+    year: "2025",
+    icon: "isc2",
+    href: "https://www.isc2.org/Certifications/CC",
+  },
+  {
+    name: "Security+",
+    org: "CompTIA",
+    year: "2025",
+    icon: "comptia",
+    href: "https://www.comptia.org/certifications/security",
+  },
+  {
+    name: "AWS Academy Cloud Developing",
+    org: "AWS",
+    year: "2025",
+    icon: "aws",
+    href: "https://aws.amazon.com/training/awsacademy/",
+  },
+  {
+    name: "Network Security",
+    org: "Cisco",
+    year: "2024",
+    icon: "cisco",
+    href: "https://www.cisco.com/",
+  },
+  {
+    name: "CCNA: Switching, Routing, and Wireless Essentials",
+    org: "Cisco",
+    year: "2023",
+    icon: "cisco",
+    href: "https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html",
+  },
+];
 
-  const sections = useMemo(
-    () =>
-      navItems.map((item) => ({
-        id: item.key,
-        label: lang === 'en' ? item.en : item.es,
-      })),
-    [lang],
-  )
+const projects = [
+  {
+    title: "NPM Team at Banorte Bank",
+    desc: "Built a pipeline to classify and index relevant news, identifying patterns in positive vs. negative reports and their effects on inflation.",
+    tags: ["Regex", "NLP", "Automation"],
+    github: "#",
+    live: "#",
+    featured: true,
+  },
+  {
+    title: "Sustainable Energy Dashboard at S2G Energy",
+    desc: "Implemented FastAPI endpoints and collaborated on the front end to track water, gas, and energy consumption in one dashboard.",
+    tags: ["FastAPI", "Python", "Full Stack"],
+    github: "#",
+    live: "#",
+  },
+];
 
-  useEffect(() => {
-    const targets = sections
-      .map((section) => document.getElementById(section.id))
-      .filter(Boolean)
-    if (!targets.length) return undefined
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id)
-          }
-        })
-      },
-      { rootMargin: '-45% 0px -40% 0px', threshold: 0.1 },
-    )
-
-    targets.forEach((target) => observer.observe(target))
-    return () => observer.disconnect()
-  }, [sections])
-
+function Nav() {
   return (
-    <div className="cyber-shell font-body text-[var(--text)]">
-      <div className="relative z-10">
-        <header className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-12 pt-10">
-          <div className="flex items-center justify-between text-[12px] uppercase tracking-[0.32em] text-white/70">
-            <span className="animate-pulse-soft">Secure channel established</span>
-            <button
-              type="button"
-              className="rounded-full border border-white/20 px-4 py-2 text-[12px] font-semibold text-[var(--accent)] transition hover:border-[var(--accent)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-              onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
-            >
-              {lang === 'en' ? 'ES' : 'EN'}
-            </button>
+    <div className="sticky top-4 z-50">
+      <div className="container-max">
+        <div className="glass px-5 py-3 rounded-full flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-display">
+              Σ
+            </div>
+            <span className="text-sm text-white/80 hidden sm:inline">Cybersecurity + Web Development</span>
           </div>
 
-          <div className="glass-card relative px-8 py-12 sm:px-12">
-            <div className="absolute right-6 top-6">
-              <span className="badge-chip">01</span>
-            </div>
-            <div className="flex flex-col gap-8">
-              <div>
-                <p className="text-[12px] uppercase tracking-[0.32em] text-white/70">
-                  {t.heroTag}
-                </p>
-                <h1 className="font-display text-glow mt-4 text-6xl font-bold text-white sm:text-6xl md:text-7xl lg:text-[72px]">
-                  Ximena Flores
-                </h1>
-                <p className="mt-2 text-sm text-white/70">
-                  Ximena Flores • 花姫
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="max-w-[55ch] text-[17px] text-white/70">
-                  {t.heroIntro}
-                </div>
-                <span className="inline-flex items-center rounded-full border border-cyan-200/20 bg-cyan-400/10 px-6 py-2 text-[12px] font-semibold uppercase tracking-[0.25em] text-[var(--accent)] shadow-[0_0_24px_rgba(56,242,255,0.35)]">
-                  {t.heroTag}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="#projects"
-                  className="btn-primary rounded-full px-6 py-3 text-sm uppercase tracking-[0.2em] transition hover:translate-y-[-1px] hover:shadow-[0_0_55px_rgba(56,242,255,0.65)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-                >
-                  View Projects
-                </a>
-                <button
-                  type="button"
-                  className="btn-secondary rounded-full px-6 py-3 text-sm uppercase tracking-[0.2em] transition hover:translate-y-[-1px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-                  title="Resume coming soon"
-                >
-                  Download Resume
-                </button>
-              </div>
-
-              <div className="hero-line" />
-
-              <div className="flex flex-wrap gap-2">
-                {t.focus.map((item) => (
-                  <span
-                    key={item}
-                    className="chip"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
+          <div className="flex items-center gap-6 text-sm text-white/75">
+            <a className="hover:text-white" href="#about">About</a>
+            <a className="hover:text-white" href="#experience">Experience</a>
+            <a className="hover:text-white" href="#projects">Projects</a>
+            <a className="hover:text-white" href="#contact">Contact</a>
           </div>
-        </header>
 
-        <nav className="sticky top-0 z-20 bg-[rgba(5,10,18,0.75)] backdrop-blur-xl">
-          <div className="mx-auto flex max-w-6xl flex-wrap gap-6 px-6 py-4 text-sm text-white/70">
-            {sections.map((item) => {
-              const isActive = activeId === item.id
-              return (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className={`nav-link transition hover:text-[var(--accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] ${
-                    isActive ? 'is-active text-[var(--accent)]' : ''
-                  }`}
-                >
-                  {item.label}
-                </a>
-              )
-            })}
-          </div>
-        </nav>
-
-        <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-20 pt-12">
-          <section id="about" className="glass-card px-6 py-10 sm:px-8">
-            <h2 className="font-display text-2xl text-white sm:text-3xl">
-              {sections[0].label}
-            </h2>
-            <div className="mt-4 max-w-[65ch] text-[17px] leading-relaxed text-white/70">
-              {t.bio.split('\n').map((line) => (
-                <p key={line} className="mb-4 last:mb-0">
-                  {line}
-                </p>
-              ))}
-            </div>
-          </section>
-
-          <section id="experience" className="glass-card px-6 py-10 sm:px-8">
-            <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
-              {sections[1].label}
-            </h2>
-            <div className="mt-6 grid gap-6 lg:grid-cols-2">
-              {t.experience.map((role) => (
-                <div
-                  key={`${role.role}-${role.company}`}
-                  className="rounded-2xl bg-white/5 p-6 transition hover:-translate-y-1"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-white/70">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-display text-lg text-white">
-                        {role.role}
-                      </span>
-                      <span className="text-white/50">•</span>
-                      <span>{role.company}</span>
-                    </div>
-                    <span className="text-[12px] uppercase tracking-[0.2em] text-white/60">
-                      {role.dates}
-                    </span>
-                  </div>
-                  <ul className="mt-4 space-y-2 text-sm text-white/70">
-                    {role.bullets.map((bullet) => (
-                      <li key={bullet} className="flex items-start gap-3">
-                        <span className="dot mt-2" aria-hidden="true" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section id="certifications" className="glass-card px-6 py-10 sm:px-8">
-            <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
-              {sections[2].label}
-            </h2>
-            <div className="mt-6 flex flex-wrap gap-3">
-              {t.certs.map((cert) => (
-                <span
-                  key={cert}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70"
-                >
-                  <span className="dot" aria-hidden="true" />
-                  {cert}
-                </span>
-              ))}
-            </div>
-          </section>
-
-          <section id="projects" className="glass-card px-6 py-10 sm:px-8">
-            <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
-              {sections[3].label}
-            </h2>
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
-              {t.projects.map((project) => (
-                <article
-                  key={project.name}
-                  className={`flex h-full flex-col justify-between rounded-2xl bg-white/5 p-6 transition hover:-translate-y-1 ${
-                    project.featured
-                      ? 'md:col-span-2 shadow-[0_0_80px_rgba(56,242,255,0.18)] ring-1 ring-cyan-300/30'
-                      : ''
-                  }`}
-                >
-                  <div>
-                    <h3 className="font-display text-lg text-white">
-                      {project.name}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/70">
-                      {project.description}
-                    </p>
-                  </div>
-                  <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-cyan-200/15 bg-white/5 px-3 py-1 text-xs text-white/70"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex gap-3">
-                      <span className="btn-outline opacity-60">GitHub</span>
-                      <span className="btn-outline opacity-60">Live</span>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section id="contact" className="glass-card px-6 py-10 sm:px-8">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="font-display text-2xl text-white sm:text-3xl text-glow">
-                  {t.contactTitle}
-                </h2>
-                <p className="mt-3 text-sm text-white/70">{t.contactCta}</p>
-              </div>
-              <div className="flex flex-col gap-3 text-sm">
-                <a
-                  href="mailto:ximenaflores02@hotmail.com"
-                  className="text-[var(--accent)] transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-                >
-                  ximenaflores02@hotmail.com
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/ximena-flores-4b094816a/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[var(--accent)] transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-                >
-                  LinkedIn
-                </a>
-                <a
-                  href="https://github.com/pankeki-19"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[var(--accent)] transition hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-                >
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </section>
-        </main>
+          <div className="chip">ES</div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+function Hero() {
+  return (
+    <section className="container-max pt-14 pb-12">
+      <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <div className="text-xs tracking-[0.25em] text-white/60 uppercase">
+            Secure channel established
+          </div>
+
+          <h1 className="font-display mt-4 text-5xl sm:text-6xl leading-tight">
+            Ximena Flores
+          </h1>
+
+          <div className="mt-3 text-white/70">
+            Ximena Flores • 花姫
+          </div>
+
+          <div className="mt-6 glass px-5 py-3 rounded-2xl inline-block">
+            <div className="text-sm text-white/85">
+              Building secure, high-performance web experiences with a defender mindset.
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a className="btn-primary" href="#projects">View Projects</a>
+            <a className="btn-glass" href="/resume.pdf" target="_blank" rel="noreferrer">Download Resume</a>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {chips.map((c) => (
+              <span key={c} className="chip">{c}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* hero visual */}
+        <div className="relative">
+          <div className="absolute -inset-8 blur-3xl opacity-60"
+               style={{ background: "radial-gradient(circle at 40% 30%, rgba(124,58,237,.55), transparent 60%)" }} />
+          <div className="glass glass-hover p-8 relative overflow-hidden">
+            <div className="text-xs tracking-[0.25em] text-white/60 uppercase">Portfolio Node</div>
+            <div className="mt-3 font-display text-3xl">CYBERSECURITY</div>
+            <div className="mt-2 text-white/70 text-sm">
+              Threats • Strategy • Blue Team Mindset
+            </div>
+
+            <div className="mt-8 grid grid-cols-2 gap-3 text-sm">
+              <div className="glass p-4">
+                <div className="text-white/70 text-xs">Focus</div>
+                <div className="mt-1 font-semibold">Detection & Risk</div>
+              </div>
+              <div className="glass p-4">
+                <div className="text-white/70 text-xs">Stack</div>
+                <div className="mt-1 font-semibold">Vite + Tailwind</div>
+              </div>
+            </div>
+
+            <div className="mt-6 text-xs text-white/60">
+              *Clean cyberpunk UI with accessible typography.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SectionTitle({ id, title, subtitle }) {
+  return (
+    <div id={id} className="mb-6">
+      <h2 className="font-display text-3xl">{title}</h2>
+      {subtitle ? <p className="mt-2 text-white/70 max-w-[65ch]">{subtitle}</p> : null}
+    </div>
+  );
+}
+
+const certIcon = {
+  isc2: FaShieldAlt,
+  comptia: FaShieldAlt,
+  aws: SiAmazon,
+  cisco: SiCisco,
+};
+
+
+function App() {
+  return (
+    <div className="min-h-screen pb-24">
+      <Nav />
+      <Hero />
+
+      <main className="container-max space-y-14">
+        <section className="glass p-8">
+          <SectionTitle
+            id="about"
+            title="About"
+            subtitle="Canadian scholarship student in Mexico studying Computer Systems & IT Engineering."
+          />
+          <p className="text-white/75 max-w-[65ch] leading-relaxed">
+            I love cybersecurity, web development, music, and video games. Currently learning Chinese, with basic proficiency in Japanese, French, and German.
+          </p>
+        </section>
+
+        <section className="glass p-8">
+          <SectionTitle id="experience" title="Experience" />
+          <div className="grid md:grid-cols-2 gap-6">
+            {experience.map((e) => (
+              <div key={e.role} className="glass glass-hover p-6">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="font-semibold">{e.role}</div>
+                    <div className="text-white/70 text-sm">{e.company}</div>
+                  </div>
+                  <div className="text-xs text-white/60 whitespace-nowrap">{e.date}</div>
+                </div>
+                <ul className="mt-4 space-y-2 text-white/75 text-sm leading-relaxed list-disc pl-5">
+                  {e.bullets.map((b) => <li key={b}>{b}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="glass p-8">
+          <SectionTitle id="certifications" title="Certifications" />
+          <div className="flex flex-wrap gap-3">
+            {certs.map((c) => {
+              const Icon = certIcon[c.icon] ?? FaShieldAlt;
+
+              return (
+                <a
+                  key={`${c.org}-${c.name}-${c.year}`}
+                  href={c.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="chip gap-2 hover:bg-white/10 hover:border-white/20 transition"
+                  title={`${c.name} — ${c.org} (${c.year})`}
+                >
+                  <Icon className="text-white/80" />
+                  <span className="text-white/90">{c.org}</span>
+                  <span className="text-white/60">({c.year})</span>
+                  <span className="hidden sm:inline text-white/70">— {c.name}</span>
+                </a>
+              );
+            })}
+          </div>
+        </section>
+
+
+        <section className="glass p-8">
+          <SectionTitle id="projects" title="Projects" subtitle="A few things I’ve built and shipped." />
+          <div className="grid md:grid-cols-2 gap-6">
+            {projects.map((p) => (
+              <div key={p.title} className={`glass glass-hover p-6 ${p.featured ? "md:col-span-2" : ""}`}>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    {p.featured ? <div className="text-xs text-white/60 uppercase tracking-[0.25em]">Featured project</div> : null}
+                    <div className="mt-2 font-display text-2xl">{p.title}</div>
+                    <p className="mt-2 text-white/70 text-sm max-w-[80ch] leading-relaxed">{p.desc}</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <a className="btn-glass px-4 py-2 text-xs" href={p.github}>GitHub</a>
+                    <a className="btn-primary px-4 py-2 text-xs" href={p.live}>Live</a>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {p.tags.map((t) => <span key={t} className="chip">{t}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="glass p-8">
+          <SectionTitle id="contact" title="Contact" subtitle="Open to security, web development, and research collaboration." />
+          <div className="grid sm:grid-cols-3 gap-3">
+            <a
+              className="btn-glass justify-start gap-3"
+              href="mailto:ximenaflores02@hotmail.com"
+            >
+              <FaEnvelope className="text-white/80" />
+              <span>Email</span>
+            </a>
+
+            <a
+              className="btn-glass justify-start gap-3"
+              href="https://www.linkedin.com/in/ximena-flores-4b094816a/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaLinkedin className="text-white/80" />
+              <span>LinkedIn</span>
+            </a>
+
+            <a
+              className="btn-glass justify-start gap-3"
+              href="https://github.com/pankeki-19"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaGithub className="text-white/80" />
+              <span>GitHub</span>
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+export default App;
