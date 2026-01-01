@@ -167,37 +167,37 @@ function App() {
     <div className="cyber-shell font-body text-[var(--text)]">
       <div className="network-lines" aria-hidden="true" />
       <div className="relative z-10">
-        <header className="mx-auto flex max-w-[1200px] flex-col gap-10 px-5 pb-12 pt-10 sm:px-8">
-          <div className="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-[var(--muted)]">
+        <header className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-12 pt-10">
+          <div className="flex items-center justify-between text-[12px] uppercase tracking-[0.32em] text-white/70">
             <span className="animate-pulse-soft">Secure channel established</span>
             <button
               type="button"
-              className="rounded-full border border-[var(--stroke)] px-4 py-2 text-xs font-semibold text-[var(--accent)] transition hover:border-[var(--accent)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+              className="rounded-full border border-white/20 px-4 py-2 text-[12px] font-semibold text-[var(--accent)] transition hover:border-[var(--accent)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
               onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
             >
               {lang === 'en' ? 'ES' : 'EN'}
             </button>
           </div>
 
-          <div className="glass-panel rounded-2xl px-7 py-10 sm:px-12">
+          <div className="glass-panel px-8 py-10 sm:px-12">
             <div className="flex flex-col gap-8">
               <div>
-                <p className="text-xs uppercase tracking-[0.4em] text-[var(--muted)]">
+                <p className="text-[12px] uppercase tracking-[0.32em] text-white/70">
                   {t.heroTag}
                 </p>
-                <h1 className="font-display mt-4 text-5xl font-bold text-white sm:text-6xl md:text-7xl">
-                  Pankeki
+                <h1 className="font-display mt-4 text-5xl font-bold text-white sm:text-6xl md:text-7xl lg:text-[72px]">
+                  Ximena Flores
                 </h1>
-                <p className="mt-2 text-sm text-[var(--muted)]">
+                <p className="mt-2 text-sm text-white/70">
                   Ximena Flores • 花姫
                 </p>
               </div>
 
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="max-w-xl text-base text-[var(--muted)] sm:text-[17px]">
+                <div className="max-w-[55ch] text-[17px] text-white/70">
                   {t.heroIntro}
                 </div>
-                <span className="inline-flex items-center rounded-full bg-[var(--accent)]/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
+                <span className="inline-flex items-center rounded-full bg-[var(--accent)]/10 px-5 py-2 text-[12px] font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
                   {t.heroTag}
                 </span>
               </div>
@@ -222,7 +222,7 @@ function App() {
                 {t.focus.map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-[var(--stroke)] bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[var(--accent2)]"
+                    className="rounded-full border border-cyan-200/15 bg-white/5 px-3 py-1 text-sm text-white/70"
                   >
                     {item}
                   </span>
@@ -232,8 +232,8 @@ function App() {
           </div>
         </header>
 
-        <nav className="sticky top-0 z-20 border-y border-white/5 bg-[rgba(5,10,18,0.75)] backdrop-blur-xl">
-          <div className="mx-auto flex max-w-[1200px] flex-wrap gap-6 px-5 py-4 text-sm uppercase tracking-[0.2em] text-[var(--muted)] sm:px-8">
+        <nav className="sticky top-0 z-20 bg-[rgba(5,10,18,0.75)] backdrop-blur-xl">
+          <div className="mx-auto flex max-w-6xl flex-wrap gap-6 px-6 py-4 text-sm text-white/70">
             {sections.map((item) => {
               const isActive = activeId === item.id
               return (
@@ -251,12 +251,12 @@ function App() {
           </div>
         </nav>
 
-        <main className="mx-auto flex max-w-[1200px] flex-col gap-10 px-5 pb-20 pt-12 sm:px-8">
-          <section id="about" className="glass-panel px-7 py-10 sm:px-12">
+        <main className="mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-20 pt-12">
+          <section id="about" className="glass-panel px-6 py-10 sm:px-8">
             <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[0].label}
             </h2>
-            <div className="mt-6 text-base leading-relaxed text-[var(--muted)] sm:text-[17px]">
+            <div className="mt-4 max-w-[65ch] text-[17px] leading-relaxed text-white/70">
               {t.bio.split('\n').map((line) => (
                 <p key={line} className="mb-4 last:mb-0">
                   {line}
@@ -265,7 +265,7 @@ function App() {
             </div>
           </section>
 
-          <section id="experience" className="glass-panel px-7 py-10 sm:px-12">
+          <section id="experience" className="glass-panel px-6 py-10 sm:px-8">
             <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[1].label}
             </h2>
@@ -273,21 +273,21 @@ function App() {
               {t.experience.map((role) => (
                 <div
                   key={`${role.role}-${role.company}`}
-                  className="rounded-2xl bg-white/5 p-5 transition hover:translate-y-[-4px]"
+                  className="rounded-2xl bg-white/5 p-6 transition hover:-translate-y-1"
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-[var(--muted)]">
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-white/70">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-display text-lg text-white">
                         {role.role}
                       </span>
-                      <span className="text-[var(--muted)]">•</span>
+                      <span className="text-white/50">•</span>
                       <span>{role.company}</span>
                     </div>
-                    <span className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
+                    <span className="text-[12px] uppercase tracking-[0.2em] text-white/60">
                       {role.dates}
                     </span>
                   </div>
-                  <ul className="mt-4 space-y-3 text-sm text-[var(--muted)]">
+                  <ul className="mt-4 space-y-2 text-sm text-white/70">
                     {role.bullets.map((bullet) => (
                       <li key={bullet} className="flex items-start gap-3">
                         <span className="dot mt-2" aria-hidden="true" />
@@ -300,10 +300,7 @@ function App() {
             </div>
           </section>
 
-          <section
-            id="certifications"
-            className="glass-panel px-7 py-10 sm:px-12"
-          >
+          <section id="certifications" className="glass-panel px-6 py-10 sm:px-8">
             <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[2].label}
             </h2>
@@ -311,7 +308,7 @@ function App() {
               {t.certs.map((cert) => (
                 <span
                   key={cert}
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--stroke)] bg-white/5 px-4 py-2 text-sm text-[var(--muted)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70"
                 >
                   <span className="dot" aria-hidden="true" />
                   {cert}
@@ -320,23 +317,23 @@ function App() {
             </div>
           </section>
 
-          <section id="projects" className="glass-panel px-7 py-10 sm:px-12">
+          <section id="projects" className="glass-panel px-6 py-10 sm:px-8">
             <h2 className="font-display text-2xl text-white sm:text-3xl">
               {sections[3].label}
             </h2>
-            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
               {t.projects.map((project) => (
                 <article
                   key={project.name}
-                  className={`flex h-full flex-col justify-between rounded-2xl bg-white/5 p-6 transition hover:translate-y-[-4px] ${
-                    project.featured ? 'ring-1 ring-[var(--accent)]/40' : ''
+                  className={`flex h-full flex-col justify-between rounded-2xl bg-white/5 p-6 transition hover:-translate-y-1 ${
+                    project.featured ? 'ring-1 ring-cyan-300/30' : ''
                   }`}
                 >
                   <div>
                     <h3 className="font-display text-lg text-white">
                       {project.name}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+                    <p className="mt-3 text-sm leading-relaxed text-white/70">
                       {project.description}
                     </p>
                   </div>
@@ -345,13 +342,13 @@ function App() {
                       {project.stack.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-[var(--stroke)] bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-[var(--accent2)]"
+                          className="rounded-full border border-cyan-200/15 bg-white/5 px-3 py-1 text-xs text-white/70"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <div className="flex gap-4 text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
+                    <div className="flex gap-4 text-xs text-[var(--accent)]">
                       <span className="opacity-50">GitHub</span>
                       <span className="opacity-50">Live</span>
                     </div>
@@ -361,13 +358,13 @@ function App() {
             </div>
           </section>
 
-          <section id="contact" className="glass-panel px-7 py-10 sm:px-12">
+          <section id="contact" className="glass-panel px-6 py-10 sm:px-8">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
                 <h2 className="font-display text-2xl text-white sm:text-3xl">
                   {t.contactTitle}
                 </h2>
-                <p className="mt-3 text-sm text-[var(--muted)]">{t.contactCta}</p>
+                <p className="mt-3 text-sm text-white/70">{t.contactCta}</p>
               </div>
               <div className="flex flex-col gap-3 text-sm">
                 <a
