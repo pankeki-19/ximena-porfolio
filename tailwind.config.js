@@ -7,6 +7,7 @@ export default {
         ink: '#0a0f0d',
         neon: '#7CFF8C',
         cyan: '#6EE7FF',
+        accent: '#6EE7FF',
         ember: '#FF8A65',
         steel: '#1c2320',
       },

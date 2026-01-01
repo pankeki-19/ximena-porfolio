@@ -1,18 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+
+const navItems = [
+  { key: 'about', en: 'About', es: 'Sobre mi' },
+  { key: 'experience', en: 'Experience', es: 'Experiencia' },
+  { key: 'certifications', en: 'Certifications', es: 'Certificaciones' },
+  { key: 'projects', en: 'Projects', es: 'Proyectos' },
+  { key: 'contact', en: 'Contact', es: 'Contacto' },
+]
 
 const content = {
   en: {
-    nav: ['About', 'Experience', 'Certifications', 'Projects', 'Contact'],
     heroTag: 'Cybersecurity + Web Development',
+    heroIntro:
+      'Building secure, high-performance web experiences with a defender mindset.',
     bio: `Canadian scholarship student in Mexico studying Computer Systems & IT Engineering.
-I build secure, performant web experiences and love the blue side of cybersecurity.
-Music and video games keep the rhythm; I am learning Chinese and have basic proficiency in Japanese, French, and German.`,
-    focus: [
-      'Web App Security',
-      'Threat Visibility',
-      'API Engineering',
-      'Cloud Foundations',
-    ],
+I love cybersecurity, web development, music, and video games. Currently learning Chinese, with basic proficiency in Japanese, French, and German.`,
+    focus: ['Web App Security', 'Threat Visibility', 'API Engineering', 'Cloud'],
     experience: [
       {
         role: 'ICT Intern',
@@ -45,15 +48,21 @@ Music and video games keep the rhythm; I am learning Chinese and have basic prof
     projects: [
       {
         name: 'NPM Team at Banorte Bank',
-        meta: 'Regex + n8n automation',
         description:
-          'Built a pipeline to classify and index relevant news, helping identify patterns in good vs. bad reports and their effects on inflation.',
+          'Built a pipeline to classify and index relevant news, identifying patterns in positive vs. negative reports and their effects on inflation.',
+        stack: ['Regex', 'n8n', 'Automation'],
+        links: [
+          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
+        ],
       },
       {
         name: 'Sustainable Energy Dashboard at S2G Energy',
-        meta: 'Full stack | FastAPI + Python',
         description:
-          'Implemented API endpoints and collaborated on the front end so customers could track water, gas, and energy consumption in a unified dashboard.',
+          'Implemented FastAPI endpoints and collaborated on the front end to track water, gas, and energy consumption in one dashboard.',
+        stack: ['FastAPI', 'Python', 'Full Stack'],
+        links: [
+          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
+        ],
       },
     ],
     contactTitle: 'Signal',
@@ -61,16 +70,16 @@ Music and video games keep the rhythm; I am learning Chinese and have basic prof
       'Open to security, web development, and research collaboration.',
   },
   es: {
-    nav: ['Sobre mi', 'Experiencia', 'Certificaciones', 'Proyectos', 'Contacto'],
     heroTag: 'Ciberseguridad + Desarrollo Web',
+    heroIntro:
+      'Construyo experiencias web seguras y de alto rendimiento con mentalidad defensiva.',
     bio: `Canadiense becada en Mexico, estudiante de Ingenieria en Sistemas Computacionales y TI.
-Construyo experiencias web seguras y eficientes y me apasiona la ciberseguridad.
-La musica y los videojuegos me inspiran; estudio chino y tengo nivel basico de japones, frances y aleman.`,
+Me encanta la ciberseguridad, el desarrollo web, la musica y los videojuegos. Estudio chino y tengo nivel basico de japones, frances y aleman.`,
     focus: [
       'Seguridad Web',
       'Visibilidad de Amenazas',
       'Ingenieria de APIs',
-      'Fundamentos Cloud',
+      'Cloud',
     ],
     experience: [
       {
@@ -104,15 +113,21 @@ La musica y los videojuegos me inspiran; estudio chino y tengo nivel basico de j
     projects: [
       {
         name: 'NPM Team at Banorte Bank',
-        meta: 'Regex + n8n',
         description:
           'Cree un flujo para clasificar e indexar noticias relevantes, identificando patrones de reportes positivos y negativos y su impacto en inflacion.',
+        stack: ['Regex', 'n8n', 'Automatizacion'],
+        links: [
+          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
+        ],
       },
       {
         name: 'Sustainable Energy Dashboard at S2G Energy',
-        meta: 'Full stack | FastAPI + Python',
         description:
-          'Implemente endpoints y colabore en el front-end para que clientes monitorearan consumos de agua, gas y energia.',
+          'Implemente endpoints con FastAPI y colabore en el front-end para monitorear consumo de agua, gas y energia.',
+        stack: ['FastAPI', 'Python', 'Full Stack'],
+        links: [
+          { label: 'GitHub', url: 'https://github.com/pankeki-19' },
+        ],
       },
     ],
     contactTitle: 'Canal',
@@ -123,102 +138,146 @@ La musica y los videojuegos me inspiran; estudio chino y tengo nivel basico de j
 
 function App() {
   const [lang, setLang] = useState('en')
+  const [activeId, setActiveId] = useState('about')
   const t = content[lang]
+
+  const sections = useMemo(
+    () =>
+      navItems.map((item) => ({
+        id: item.key,
+        label: lang === 'en' ? item.en : item.es,
+      })),
+    [lang],
+  )
+
+  useEffect(() => {
+    const targets = sections
+      .map((section) => document.getElementById(section.id))
+      .filter(Boolean)
+    if (!targets.length) return undefined
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: '-40% 0px -45% 0px', threshold: 0.1 },
+    )
+
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [sections])
 
   return (
     <div className="app-shell bg-ink text-white">
-      <div className="relative z-10 min-h-screen bg-radial-void px-5 py-10 sm:px-10">
-        <header className="mx-auto flex max-w-6xl flex-col gap-8">
-          <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-neon/70">
+      <div className="relative z-10 min-h-screen bg-radial-void">
+        <header className="mx-auto flex max-w-[1100px] flex-col gap-10 px-5 pb-12 pt-10 sm:px-8">
+          <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-accent/70">
             <span className="scanline-fade">Secure channel established</span>
             <button
               type="button"
-              className="pill rounded-full px-4 py-2 text-xs font-semibold text-neon shadow-glow transition hover:text-cyan"
+              className="rounded-full border border-accent/40 px-4 py-2 text-xs font-semibold text-accent transition hover:border-accent hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
               onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
             >
               {lang === 'en' ? 'ES' : 'EN'}
             </button>
           </div>
 
-          <div className="panel rounded-3xl p-6 sm:p-8">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.4em] text-cyan/80">
-                  {t.heroTag}
-                </p>
-                <h1 className="heading-font cursor-blink text-4xl font-bold text-neon sm:text-5xl md:text-6xl">
-                  Pankeki
-                </h1>
-                <p className="text-sm text-white/70">
-                  Ximena Flores • 花姫
-                </p>
+          <div className="panel rounded-[32px] p-7 sm:p-10">
+            <div className="flex flex-col gap-6">
+              <p className="text-xs uppercase tracking-[0.35em] text-accent/70">
+                {t.heroTag}
+              </p>
+              <div className="flex flex-wrap items-end justify-between gap-6">
+                <div>
+                  <h1 className="heading-font text-5xl font-bold text-white sm:text-6xl md:text-7xl">
+                    Pankeki
+                  </h1>
+                  <p className="mt-2 text-sm text-white/60">
+                    Ximena Flores • 花姫
+                  </p>
+                </div>
+                <div className="text-right text-sm text-white/70">
+                  <p className="max-w-sm">{t.heroIntro}</p>
+                </div>
               </div>
-              <nav className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-white/60">
-                {t.nav.map((item) => (
-                  <a
-                    key={item}
-                    href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="transition hover:text-neon"
-                  >
-                    {item}
-                  </a>
-                ))}
-              </nav>
-            </div>
 
-            <div className="mt-8 grid gap-6 md:grid-cols-[1.2fr_0.8fr]">
-              <p className="leading-relaxed text-white/80">{t.bio}</p>
-              <div className="grid gap-3">
-                {t.focus.map((item, index) => (
-                  <div
+              <div className="mt-4 flex flex-wrap gap-2">
+                {t.focus.map((item) => (
+                  <span
                     key={item}
-                    className="pill reveal rounded-xl px-4 py-3 text-xs uppercase tracking-[0.2em] text-neon/90"
-                    style={{ animationDelay: `${0.1 + index * 0.1}s` }}
+                    className="rounded-full border border-accent/30 bg-white/5 px-4 py-1 text-xs uppercase tracking-[0.2em] text-accent/90"
                   >
                     {item}
-                  </div>
+                  </span>
                 ))}
               </div>
             </div>
           </div>
         </header>
 
-        <main className="mx-auto mt-10 flex max-w-6xl flex-col gap-8">
-          <section
-            id={t.nav[0].toLowerCase().replace(/\s+/g, '-')}
-            className="panel reveal rounded-3xl p-6 sm:p-8"
-            style={{ animationDelay: '0.2s' }}
-          >
-            <h2 className="heading-font text-2xl text-neon">
-              {t.nav[0]}
+        <nav className="sticky top-0 z-20 border-y border-white/5 bg-ink/80 backdrop-blur">
+          <div className="mx-auto flex max-w-[1100px] flex-wrap gap-4 px-5 py-4 text-sm uppercase tracking-[0.2em] text-white/60 sm:px-8">
+            {sections.map((item) => {
+              const isActive = activeId === item.id
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`transition hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${
+                    isActive ? 'border-b-2 border-accent pb-1 text-accent' : ''
+                  }`}
+                >
+                  {item.label}
+                </a>
+              )
+            })}
+          </div>
+        </nav>
+
+        <main className="mx-auto flex max-w-[1100px] flex-col gap-10 px-5 pb-16 pt-10 sm:px-8">
+          <section id="about" className="panel rounded-[28px] p-7 sm:p-10">
+            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+              {sections[0].label}
             </h2>
-            <p className="mt-4 text-white/80">{t.bio}</p>
+            <div className="mt-6 text-base leading-relaxed text-white/75 sm:text-[17px]">
+              {t.bio.split('\n').map((line) => (
+                <p key={line} className="mb-4 last:mb-0">
+                  {line}
+                </p>
+              ))}
+            </div>
           </section>
 
           <section
-            id={t.nav[1].toLowerCase().replace(/\s+/g, '-')}
-            className="panel reveal rounded-3xl p-6 sm:p-8"
-            style={{ animationDelay: '0.3s' }}
+            id="experience"
+            className="panel rounded-[28px] p-7 sm:p-10"
           >
-            <h2 className="heading-font text-2xl text-neon">
-              {t.nav[1]}
+            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+              {sections[1].label}
             </h2>
             <div className="mt-6 space-y-6">
               {t.experience.map((role) => (
                 <div
-                  key={role.role}
-                  className="rounded-2xl border border-white/10 bg-steel/60 p-5"
+                  key={`${role.role}-${role.company}`}
+                  className="rounded-2xl bg-white/5 p-5"
                 >
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="heading-font text-lg text-cyan">
-                      {role.role}
-                    </h3>
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-white/70">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="heading-font text-lg text-white">
+                        {role.role}
+                      </span>
+                      <span className="text-white/40">•</span>
+                      <span className="text-white/70">{role.company}</span>
+                    </div>
                     <span className="text-xs uppercase tracking-[0.2em] text-white/50">
                       {role.dates}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-white/70">{role.company}</p>
-                  <ul className="mt-4 space-y-2 text-sm text-white/75">
+                  <ul className="mt-4 space-y-2 text-sm text-white/70">
                     {role.bullets.map((bullet) => (
                       <li key={bullet}>▸ {bullet}</li>
                     ))}
@@ -229,71 +288,84 @@ function App() {
           </section>
 
           <section
-            id={t.nav[2].toLowerCase().replace(/\s+/g, '-')}
-            className="panel reveal rounded-3xl p-6 sm:p-8"
-            style={{ animationDelay: '0.4s' }}
+            id="certifications"
+            className="panel rounded-[28px] p-7 sm:p-10"
           >
-            <h2 className="heading-font text-2xl text-neon">
-              {t.nav[2]}
+            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+              {sections[2].label}
             </h2>
-            <div className="mt-6 grid gap-3 md:grid-cols-2">
+            <div className="mt-6 flex flex-wrap gap-3">
               {t.certs.map((cert) => (
-                <div
+                <span
                   key={cert}
-                  className="rounded-2xl border border-white/10 bg-steel/50 px-4 py-3 text-sm text-white/80"
+                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/75"
                 >
                   {cert}
-                </div>
+                </span>
               ))}
             </div>
           </section>
 
-          <section
-            id={t.nav[3].toLowerCase().replace(/\s+/g, '-')}
-            className="panel reveal rounded-3xl p-6 sm:p-8"
-            style={{ animationDelay: '0.5s' }}
-          >
-            <h2 className="heading-font text-2xl text-neon">
-              {t.nav[3]}
+          <section id="projects" className="panel rounded-[28px] p-7 sm:p-10">
+            <h2 className="heading-font text-2xl text-white sm:text-3xl">
+              {sections[3].label}
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
               {t.projects.map((project) => (
                 <article
                   key={project.name}
-                  className="rounded-2xl border border-white/10 bg-steel/50 p-5"
+                  className="flex h-full flex-col justify-between rounded-2xl bg-white/5 p-5"
                 >
-                  <div className="flex items-center justify-between gap-3">
-                    <h3 className="heading-font text-lg text-cyan">
+                  <div>
+                    <h3 className="heading-font text-lg text-white">
                       {project.name}
                     </h3>
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-                      {project.meta}
-                    </span>
+                    <p className="mt-3 text-sm leading-relaxed text-white/70">
+                      {project.description}
+                    </p>
                   </div>
-                  <p className="mt-3 text-sm text-white/75">
-                    {project.description}
-                  </p>
+                  <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex flex-wrap gap-2">
+                      {project.stack.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-accent/20 bg-accent/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-accent/80"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-3 text-xs uppercase tracking-[0.2em] text-accent/80">
+                      {project.links.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="transition hover:text-white"
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                 </article>
               ))}
             </div>
           </section>
 
-          <section
-            id={t.nav[4].toLowerCase().replace(/\s+/g, '-')}
-            className="panel reveal rounded-3xl p-6 sm:p-8"
-            style={{ animationDelay: '0.6s' }}
-          >
+          <section id="contact" className="panel rounded-[28px] p-7 sm:p-10">
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
-                <h2 className="heading-font text-2xl text-neon">
+                <h2 className="heading-font text-2xl text-white sm:text-3xl">
                   {t.contactTitle}
                 </h2>
-                <p className="mt-2 text-sm text-white/70">{t.contactCta}</p>
+                <p className="mt-3 text-sm text-white/70">{t.contactCta}</p>
               </div>
               <div className="flex flex-col gap-3 text-sm">
                 <a
                   href="mailto:ximenaflores02@hotmail.com"
-                  className="text-neon transition hover:text-cyan"
+                  className="text-accent transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
                   ximenaflores02@hotmail.com
                 </a>
@@ -301,7 +373,7 @@ function App() {
                   href="https://www.linkedin.com/in/ximena-flores-4b094816a/"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-neon transition hover:text-cyan"
+                  className="text-accent transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
                   LinkedIn
                 </a>
@@ -309,7 +381,7 @@ function App() {
                   href="https://github.com/pankeki-19"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-neon transition hover:text-cyan"
+                  className="text-accent transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
                   GitHub
                 </a>
